@@ -27,11 +27,12 @@ public class Tile {
       
     int value;
 
-    public Tile() {
+    public Tile() { // INITIAL contructor 0 
       this(0);
     }
 
-    public Tile(int num) {
+    public Tile(int num) { //contructor with parameter
+        
       value = num;
     }
 
@@ -39,17 +40,17 @@ public class Tile {
       return value == 0; 
     }
 
-    public Color getForeground() { 
+    public Color getForeground() { // color for a number of tile
 
 if(value<16){
-    return new Color(0x776e65);
+    return new Color(0x776e65); // dark gray on light background if 2,4,8
 }
 else{
-    return  new Color(0xf9f6f2);
+    return  new Color(0xf9f6f2);//light gray
 }
     }
 
-    public Color getBackground() { //color for spot 
+    public Color getBackground() { //color for background of title  
       switch (value) {
           
         case 2:    return new Color(0xeee4da);
@@ -64,7 +65,7 @@ else{
         case 1024: return new Color(0xedc53f);
         case 2048: return new Color(0xedc22e);
       }
-      return new Color(0xcdc1b4);
+      return new Color(0x3D85C6);// blue color for the background of the other tiles
     }
   }
     
