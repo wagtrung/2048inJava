@@ -73,5 +73,27 @@ public class SetGame extends JPanel {
         return list;
     }
   
-  
+      boolean checkMove() {
+        if (checkSpace().size() != 0) { //cannot move if no space left
+            return true;
+        }
+        for (int x = 0; x < 4; x++) {// cannot move if no same value next to each others
+            for (int y = 0; y < 4; y++) {
+                Tile t = new Tile();
+                 t=tileAt(x, y);
+                if ((x < 3 && t.value == tileAt(x + 1, y).value)// check the tile next in hor 
+                        || ((y < 3) && t.value == tileAt(x, y + 1).value)) { //and ver if the same value then can move
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+      
+    private Tile tileAt(int x, int y) {
+        return myTiles[x + y * 4];
+    }
+    
+    
 }
