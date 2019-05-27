@@ -8,6 +8,7 @@ package pkg2048_wt;
 import java.awt.Color;
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -93,6 +94,54 @@ public class SetGame extends JPanel {
       
     private Tile tileAt(int x, int y) {
         return myTiles[x + y * 4];
+    }
+    
+     private Tile[] arrangeLine(Tile[] array) {// arrange to easy to merge
+        LinkedList<Tile> l = new LinkedList<Tile>();
+        //add the valued elems in list
+        for (int i = 0; i < 4; i++) {
+            if (!array[i].isEmpty()) {// in input array,if value of element=0 then not add into list
+                l.addLast(array[i]);
+            }
+        }
+        //check after adding
+        if (l.size() == 0) {// all of 4 elems in a line are=0 then return input array of a line
+            return array;
+        } 
+        else {// in list has some elems 
+            Tile[] newLine = new Tile[4];//will store the list in new array
+            ensureSize(l);// a line must have 4 elements(incase of 1,2,3 elems in list)
+            for (int i = 0; i < 4; i++) {
+                newLine[i] = l.removeFirst();//pop the list then stored in new array
+            }
+            return newLine; // return an arranged array
+        }
+    }
+
+    private Tile[] mergeLine(Tile[] array) {// in a line, same value will be merged
+        LinkedList<Tile> l = new LinkedList<Tile>();
+        //check to merge 
+        for (int i = 0; i <=3 && !array[i].isEmpty(); i++) { // no check if elems have valued =0
+            int num = array[i].value;
+            if (i <=2 && array[i].value == array[i + 1].value) {
+                num *= 2;
+                Score += num;
+                i++; // no check the next cause it already merged with the previous
+            }
+            l.add(new Tile(num));// add to list affter merging
+        }
+        if (l.size() == 0) {//cannot merge
+            return array;
+        } else {// success in merging
+            ensureSize(l);// add for enough 4 elems in list
+            return l.toArray(new Tile[4]);// covert list to array
+        }
+    }
+
+    private static void ensureSize(List<Tile> l) { //be sure a list in line must have 4 elems
+        while (l.size() != 4) { // will add until enough 4 in linelist
+            l.add(new Tile()); //elem has value is 0 when added
+        }
     }
     
     
