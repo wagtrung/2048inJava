@@ -8,6 +8,7 @@ package pkg2048_wt;
 import java.awt.Color;
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -156,6 +157,21 @@ public class SetGame extends JPanel {
     private void setLine(int index, Tile[] fromArray) {//start coppy from 0 in fromArray
         System.arraycopy(fromArray, 0, myTiles, index * 4, 4);// take 4 elems add at head of each line
     }
+    
+    
+    private boolean compare2Array(Tile[] array1, Tile[] array2) {//check same array in line
+      
+       return Arrays.equals(array1, array2);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
