@@ -145,4 +145,18 @@ public class SetGame extends JPanel {
     }
     
     
+     private Tile[] getLine(int index) { //get a line in horizon at 0,1,2,3
+        Tile[] line = new Tile[4];
+        for (int i = 0; i < 4; i++) {
+            line[i] = tileAt(i, index);
+        }
+        return line;
+    }
+    
+    private void setLine(int index, Tile[] fromArray) {//start coppy from 0 in fromArray
+        System.arraycopy(fromArray, 0, myTiles, index * 4, 4);// take 4 elems add at head of each line
+    }
+    
+    
+    
 }
