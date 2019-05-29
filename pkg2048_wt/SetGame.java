@@ -255,7 +255,7 @@ public class SetGame extends JPanel {
             addTile();
         }
         
-    
+    // move up, move down
        
     }
     
