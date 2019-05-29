@@ -127,6 +127,7 @@ public class SetGame extends JPanel {
             if (i <=2 && array[i].value == array[i + 1].value) {
                 num *= 2;
                 Score += num;
+                Win(Score);
                 i++; // no check the next cause it already merged with the previous
             }
             l.add(new Tile(num));// add to list affter merging
@@ -171,7 +172,7 @@ public class SetGame extends JPanel {
             
             Tile[] array1 = getLine(i);//get a line in horizontal incluing 4 elems
             Tile[] array2 = mergeLine(arrangeLine(array1));// arrange then merge elems in that array
-            //affter merged, add the line of array in array myTiles
+            //after merged, add the line of array in array myTiles
             setLine(i, array2);
             //after stored 4 lines incluing 16 elems in each arrays
             if (!checkToAdd && !compare2Array(array1, array2)) {// only born a new tile when 2 arrays not same
@@ -185,9 +186,78 @@ public class SetGame extends JPanel {
         }
     }
     
+    private Tile[] moveLineR(Tile[] oldLine) {
+        LinkedList<Tile> l = new LinkedList<Tile>();
+        for (int i = 0; i < 4; i++) {
+            if (!oldLine[i].isEmpty()) {
+                l.addLast(oldLine[i]);
+            }
+        }
+        if (l.size() == 0) {
+            return oldLine;
+        } else {
+            Tile[] newLine = new Tile[4];
+             while (l.size() != 4) {
+            l.addFirst(new Tile());
+        }
+            for (int i = 0; i < 4; i++) {
+                newLine[i] = l.removeFirst();
+            }
+            return newLine;
+        }
+    }
+    
+    private void Win(int score){
+      checkWin=(score==2048)?true:false;
+        }
+    
+     private Tile[] mergeLineR(Tile[] oldLine) {
+        LinkedList<Tile> list = new LinkedList<Tile>();
+        for (int i = 3; i >=0 && !oldLine[i].isEmpty(); i--) {
+            int num = oldLine[i].value;
+            if (i >0 && oldLine[i].value == oldLine[i -1].value) {
+                num *= 2;
+                Score += num;
+                Win(Score);
+                i--;
+            }
+            list.addFirst(new Tile(num));
+        }
+        if (list.size() == 0) {
+            return oldLine;
+        } else {
+            while (list.size() != 4) {
+            list.addFirst(new Tile());
+        }
+           
+            return list.toArray(new Tile[4]);
+        }
+    }
     
     
+       public void moveRight() {
+             boolean needAddTile = false;
+        for (int i = 0; i < 4; i++) {
+            
+            
+            Tile[] array1 = getLine(i);//get a line in horizontal incluing 4 elems
+            Tile[] array2 = mergeLineR(moveLineR(array1));// arrange then merge elems in that array
+            //affter merged, add the line of array in array myTiles
+            setLine(i, array2);
+            
+            if ( !needAddTile&&!compare2Array(array1,array2)) {
+                needAddTile = true;
+            }
+
+        }
+
+        if (needAddTile) {
+            addTile();
+        }
+        
     
+       
+    }
     
     
     
