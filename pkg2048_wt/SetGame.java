@@ -165,7 +165,25 @@ public class SetGame extends JPanel {
     }
     
     
-    
+     public void moveLeft() {
+        boolean checkToAdd = false;
+        for (int i = 0; i < 4; i++) {
+            
+            Tile[] array1 = getLine(i);//get a line in horizontal incluing 4 elems
+            Tile[] array2 = mergeLine(arrangeLine(array1));// arrange then merge elems in that array
+            //affter merged, add the line of array in array myTiles
+            setLine(i, array2);
+            //after stored 4 lines incluing 16 elems in each arrays
+            if (!checkToAdd && !compare2Array(array1, array2)) {// only born a new tile when 2 arrays not same
+                checkToAdd = true;                                                                  
+            }
+
+        }
+
+        if (checkToAdd) {
+            addTile();
+        }
+    }
     
     
     
