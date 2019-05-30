@@ -9,6 +9,27 @@ package pkg2048_wt;
  *
  * @author WagTrung
  */
-public class main {
-    
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
+
+/**
+ *
+ * @author WagTrung
+ */
+public class main extends JFrame {
+
+    public static void main(String[] args) {
+        JFrame game = new JFrame("Game 2048 | WagTrung");
+
+        game.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);// add close on top right
+
+        game.setSize(700, 535); //w|h
+        game.setResizable(true);// can be zoom out
+
+        game.add(new SetGame());
+
+        game.setLocationRelativeTo(null);
+        game.setVisible(true);
+    }
+
 }

@@ -7,6 +7,8 @@ package pkg2048_wt;
 
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -29,8 +31,45 @@ public class SetGame extends JPanel {
     boolean checkLose = false;
     int Score = 0;
 
-    public SetGame() { //contructor
+   public SetGame() { //contructor
 
+        // java swing
+        setFocusable(true);
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    startGame();
+                }
+                if (!checkMove()) {// cannot move --> stop game
+                    checkLose = true;
+                }
+
+                if (!checkWin && !checkLose) {
+                    switch (e.getKeyCode()) {
+                        case KeyEvent.VK_LEFT:
+                            moveLeft();
+                            break;
+                        case KeyEvent.VK_RIGHT:
+                            moveRight();
+                            break;
+                        case KeyEvent.VK_DOWN:
+                            moveDown();
+                            break;
+                        case KeyEvent.VK_UP:
+                            moveUp();
+                            break;
+                    }
+                }
+
+                if (!checkWin && !checkMove()) {
+                    checkLose = true;
+                }
+
+                repaint();
+            }
+        });
+        startGame();
     }
 
     public void startGame() {
@@ -348,4 +387,77 @@ public class SetGame extends JPanel {
     }
 
 ////----DOWN---////
+    
+      public void moveDown() {
+
+        boolean needAddTile = false;
+        for (int i = 0; i < 4; i++) {
+
+            Tile[] array1 = getCol(i);//get a line in horizontal incluing 4 elems
+            Tile[] array2 = mergeColD(arrangeColD(array1));// arrange then merge elems in that array
+            //affter merged, add the line of array in array myTiles
+            setCol(i, array2);
+
+            if (!needAddTile && !compare2Array(array1, array2)) {
+                needAddTile = true;
+            }
+
+        }
+
+        if (needAddTile) {
+            addTile();
+        }
+
+    }
+
+   private Tile[] arrangeColD(Tile[] oldLine) {//odline including 4 elms
+        LinkedList<Tile> l = new LinkedList<Tile>();
+        
+        for (int i = 0; i < 4; i++) {
+            if (!oldLine[i].isEmpty()) {
+                l.addLast(oldLine[i]);
+            }
+        }
+        if (l.size() == 0) {
+            return oldLine;
+        } else {
+            Tile[] newLine = new Tile[4];
+            while (l.size() != 4) {
+                l.addFirst(new Tile());
+            }
+            for (int i = 0; i < 4; i++) {
+                newLine[i] = l.removeFirst();
+            }
+            return newLine;
+        }
+    }
+
+    private Tile[] mergeColD(Tile[] oldLine) {
+        LinkedList<Tile> list = new LinkedList<Tile>();
+        for (int i = 3; i >=0 && !oldLine[i].isEmpty(); i--) {
+            int num = oldLine[i].value;
+            if (i >0 && oldLine[i].value == oldLine[i - 1].value) {
+                num *= 2;
+                Score += num;
+                int ourTarget = 2048;// chua addd
+                Win(Score);
+                i--;
+            }
+            list.addFirst(new Tile(num));
+        }
+        if (list.size() == 0) {
+            return oldLine;
+        } else {
+             while (list.size() != 4) {
+                list.addFirst(new Tile());
+            }
+            return list.toArray(new Tile[4]);
+        }
+    }
+    
+    
+    
+    
+    
+    
 }
