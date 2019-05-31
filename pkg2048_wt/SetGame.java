@@ -64,6 +64,12 @@ public class SetGame extends JPanel {
                         case KeyEvent.VK_UP:
                             moveUp();
                             break;
+                        case KeyEvent.VK_W:
+                             checkWin=true;
+                            break;
+                        case KeyEvent.VK_L:
+                             checkLose=true;
+                            break;
                     }
                 }
 
@@ -140,8 +146,8 @@ public class SetGame extends JPanel {
         return myTiles[x + y * 4];
     }
 
-    private void Win(int score) {
-        checkWin = (score == 2048) ? true : false;
+    private void Win(int val) {
+        checkWin = (val == 2048) ? true : false;
     }
 
     private void full4Elems(List<Tile> l) { //be sure a list must have 4 elems
@@ -239,7 +245,7 @@ public class SetGame extends JPanel {
             if (i <= 2 && array[i].value == array[i + 1].value) {
                 num *= 2;
                 Score += num;
-                Win(Score);
+                Win(num);
                 i++; // no check the next cause it already merged with the previous
             }
             l.add(new Tile(num));// add to list affter merging
@@ -302,7 +308,7 @@ public class SetGame extends JPanel {
             if (i > 0 && oldLine[i].value == oldLine[i - 1].value) {
                 num *= 2;
                 Score += num;
-                Win(Score);
+                Win(num);
                 i--;
             }
             list.addFirst(new Tile(num));
@@ -367,7 +373,7 @@ public class SetGame extends JPanel {
             if (i < 3 && oldLine[i].value == oldLine[i + 1].value) {
                 num *= 2;
                 Score += num;
-                Win(Score);
+                Win(num);
                 i++;
             }
             list.add(new Tile(num));
@@ -432,8 +438,7 @@ public class SetGame extends JPanel {
             if (i > 0 && oldLine[i].value == oldLine[i - 1].value) {
                 num *= 2;
                 Score += num;
-                int ourTarget = 2048;// chua addd
-                Win(Score);
+                Win(num);
                 i--;
             }
             list.addFirst(new Tile(num));
@@ -492,21 +497,33 @@ public class SetGame extends JPanel {
         }
 
         if (checkWin || checkLose) {
-            g.setColor(new Color(255, 255, 255, 30));
+            g.setColor(new Color(0xf67c00));
             g.fillRect(0, 0, getWidth(), getHeight());
-            g.setColor(new Color(78, 139, 202));
+            g.setColor(new Color(0xffffff));
             g.setFont(new Font(font_name, Font.BOLD, 48));
             if (checkWin) {
-                g.drawString("WON", 68, 150);
+                  g.setFont(new Font(font_name, Font.PLAIN, 150));
+                g.drawString("WON", 150, 270);
+                
+                g.setColor(new Color(0xff3b25));
+                g.fillRect(0, 430, 800, 70);
+                
+                g.setFont(new Font(font_name, Font.PLAIN, 20));
+                g.setColor(new Color(0xfff0ef));
+                g.drawString("Press ESC to play again", 250, getHeight() - 20);
             }
             if (checkLose) {
-                g.drawString("LOSE", 64, 200);
+                g.setFont(new Font(font_name, Font.PLAIN, 150));
+                g.drawString("LOSE", 150, 270);
+                
+                g.setColor(new Color(0x4d4d4d));
+                g.fillRect(0, 430, 800, 70);
+                
+                g.setFont(new Font(font_name, Font.PLAIN, 20));
+                g.setColor(new Color(0xfff0ef));
+                g.drawString("Press ESC to play again", 250, getHeight() - 20);
             }
-            if (checkWin || checkLose) {
-                g.setFont(new Font(font_name, Font.PLAIN, 16));
-                g.setColor(new Color(128, 128, 128, 128));
-                g.drawString("Press ESC to play again", 80, getHeight() - 40);
-            }
+
         }
         g.setFont(new Font(font_name, Font.TYPE1_FONT, 30));
         g.drawString("Score: " + Score, 520, 50);
