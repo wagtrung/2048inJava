@@ -6,7 +6,12 @@
 package pkg2048_wt;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -24,14 +29,14 @@ public class SetGame extends JPanel {
 
     Tile[] myTiles;
     Image bg = new ImageIcon("background.jpg").getImage();
-    String font = "Arial";
+    String font_name = "Arial";
     int tile_font_size = 99;
-    int title_margin = 20;
+    int TILES_MARGIN = 20;
     boolean checkWin = false;
     boolean checkLose = false;
     int Score = 0;
 
-   public SetGame() { //contructor
+    public SetGame() { //contructor
 
         // java swing
         setFocusable(true);
@@ -133,17 +138,18 @@ public class SetGame extends JPanel {
     ////---PREPARE FOR LEFT-RIGHT-UP-DOWN----////
     private Tile tileAt(int x, int y) {
         return myTiles[x + y * 4];
-    }  
+    }
 
     private void Win(int score) {
         checkWin = (score == 2048) ? true : false;
     }
 
-    private static void ensureSize(List<Tile> l) { //be sure a list in line must have 4 elems
-        while (l.size() != 4) { // will add until enough 4 in linelist
+    private void full4Elems(List<Tile> l) { //be sure a list must have 4 elems
+        while (l.size() != 4) { // will add until enough 4 in list
             l.add(new Tile()); //elem has value is 0 when added
         }
     }
+/// Line in horizontal
 
     private Tile[] getLine(int index) { //get a line in horizon at 0,1,2,3
         Tile[] line = new Tile[4];
@@ -156,28 +162,15 @@ public class SetGame extends JPanel {
     private void setLine(int index, Tile[] fromArray) {//start coppy from 0 in fromArray
         System.arraycopy(fromArray, 0, myTiles, index * 4, 4);// take 4 elems add at head of each line
     }
+/// Column in vertical
 
-    private void setCol(int index, Tile[] a) {//start coppy from 0 in fromArray
-        if (index == 0) {
-            myTiles[0] = a[0];
-            myTiles[4] = a[1];
-            myTiles[8] = a[2];
-            myTiles[12] = a[3];
-        } else if (index == 1) {
-            myTiles[1] = a[0];
-            myTiles[5] = a[1];
-            myTiles[9] = a[2];
-            myTiles[13] = a[3];
-        } else if (index == 2) {
-            myTiles[2] = a[0];
-            myTiles[6] = a[1];
-            myTiles[10] = a[2];
-            myTiles[14] = a[3];
-        } else if (index == 3) {
-            myTiles[3] = a[0];
-            myTiles[7] = a[1];
-            myTiles[11] = a[2];
-            myTiles[15] = a[3];
+    private void setCol(int index, Tile[] a) {//start coppy merged Col array to array myTiles
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (i == index) {
+                    myTiles[i + j * 4] = a[j];
+                }
+            }
         }
 
     }
@@ -189,6 +182,7 @@ public class SetGame extends JPanel {
         }
         return col;
     }
+/// compare origin array with merged array
 
     private boolean compare2Array(Tile[] array1, Tile[] array2) {//check same array in line
 
@@ -229,7 +223,7 @@ public class SetGame extends JPanel {
             return array;
         } else {// in list has some elems 
             Tile[] newLine = new Tile[4];//will store the list in new array
-            ensureSize(l);// a line must have 4 elements(incase of 1,2,3 elems in list)
+            full4Elems(l);// a line must have 4 elements(incase of 1,2,3 elems in list)
             for (int i = 0; i < 4; i++) {
                 newLine[i] = l.removeFirst();//pop the list then stored in new array
             }
@@ -253,7 +247,7 @@ public class SetGame extends JPanel {
         if (l.size() == 0) {//cannot merge
             return array;
         } else {// success in merging
-            ensureSize(l);// add for enough 4 elems in list
+            full4Elems(l);// add for enough 4 elems in list
             return l.toArray(new Tile[4]);// covert list to array
         }
     }
@@ -358,7 +352,7 @@ public class SetGame extends JPanel {
             return oldLine;
         } else {
             Tile[] newLine = new Tile[4];
-            ensureSize(l);
+            full4Elems(l);
             for (int i = 0; i < 4; i++) {
                 newLine[i] = l.removeFirst();
             }
@@ -381,14 +375,13 @@ public class SetGame extends JPanel {
         if (list.size() == 0) {
             return oldLine;
         } else {
-            ensureSize(list);
+            full4Elems(list);
             return list.toArray(new Tile[4]);
         }
     }
 
 ////----DOWN---////
-    
-      public void moveDown() {
+    public void moveDown() {
 
         boolean needAddTile = false;
         for (int i = 0; i < 4; i++) {
@@ -410,9 +403,9 @@ public class SetGame extends JPanel {
 
     }
 
-   private Tile[] arrangeColD(Tile[] oldLine) {//odline including 4 elms
+    private Tile[] arrangeColD(Tile[] oldLine) {//odline including 4 elms
         LinkedList<Tile> l = new LinkedList<Tile>();
-        
+
         for (int i = 0; i < 4; i++) {
             if (!oldLine[i].isEmpty()) {
                 l.addLast(oldLine[i]);
@@ -434,9 +427,9 @@ public class SetGame extends JPanel {
 
     private Tile[] mergeColD(Tile[] oldLine) {
         LinkedList<Tile> list = new LinkedList<Tile>();
-        for (int i = 3; i >=0 && !oldLine[i].isEmpty(); i--) {
+        for (int i = 3; i >= 0 && !oldLine[i].isEmpty(); i--) {
             int num = oldLine[i].value;
-            if (i >0 && oldLine[i].value == oldLine[i - 1].value) {
+            if (i > 0 && oldLine[i].value == oldLine[i - 1].value) {
                 num *= 2;
                 Score += num;
                 int ourTarget = 2048;// chua addd
@@ -448,16 +441,80 @@ public class SetGame extends JPanel {
         if (list.size() == 0) {
             return oldLine;
         } else {
-             while (list.size() != 4) {
+            while (list.size() != 4) {
                 list.addFirst(new Tile());
             }
             return list.toArray(new Tile[4]);
         }
     }
-    
-    
-    
-    
-    
-    
+
+    ////paint swing///////////////////////////////////////////////////////////
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+
+        ImageIcon bg = new ImageIcon("background.png");
+        Image bag = bg.getImage();
+        g.drawImage(bag, 0, 0, null);
+
+        g.fillRect(0, 0, this.getSize().width, this.getSize().height);
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 4; x++) {
+                drawTile(g, myTiles[x + y * 4], x, y);
+            }
+        }
+    }
+
+    private void drawTile(Graphics g2, Tile tile, int x, int y) {
+        Graphics2D g = ((Graphics2D) g2);
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_NORMALIZE);
+
+        int value = tile.value;
+        int xOffset = offsetCoors(x);
+        int yOffset = offsetCoors(y);
+///BOX
+        g.setColor(tile.getBackground());//get background for Tiles
+        g.fillRoundRect(xOffset, yOffset, tile_font_size, tile_font_size, 200, 200); //Box Tile
+        g.setColor(tile.getForeground());// get color for font inside Tiles
+///FONT
+        Font font = new Font(font_name, Font.BOLD, 34);
+        g.setFont(font);
+
+        String s = String.valueOf(value);
+        FontMetrics fm = getFontMetrics(font);
+
+        int w = fm.stringWidth(s);
+        int h = -(int) fm.getLineMetrics(s, g).getBaselineOffsets()[2];
+
+        if (value != 0) {
+            g.drawString(s, xOffset + (tile_font_size - w) / 2, yOffset + tile_font_size - (tile_font_size - h) / 2 - 2);
+        }
+
+        if (checkWin || checkLose) {
+            g.setColor(new Color(255, 255, 255, 30));
+            g.fillRect(0, 0, getWidth(), getHeight());
+            g.setColor(new Color(78, 139, 202));
+            g.setFont(new Font(font_name, Font.BOLD, 48));
+            if (checkWin) {
+                g.drawString("WON", 68, 150);
+            }
+            if (checkLose) {
+                g.drawString("LOSE", 64, 200);
+            }
+            if (checkWin || checkLose) {
+                g.setFont(new Font(font_name, Font.PLAIN, 16));
+                g.setColor(new Color(128, 128, 128, 128));
+                g.drawString("Press ESC to play again", 80, getHeight() - 40);
+            }
+        }
+        g.setFont(new Font(font_name, Font.TYPE1_FONT, 30));
+        g.drawString("Score: " + Score, 520, 50);
+
+    }
+
+    private int offsetCoors(int index) {
+        return index * (TILES_MARGIN + tile_font_size) + TILES_MARGIN;
+    }
+
 }
