@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -35,6 +36,11 @@ public class SetGame extends JPanel {
     boolean checkWin = false;
     boolean checkLose = false;
     int Score = 0;
+    Tile[] un;
+    Tile[] re;
+    Stack undo = new Stack() ;
+    Stack redo =  new Stack();
+    int c=0;
 
     public SetGame() { //contructor
 
@@ -267,7 +273,13 @@ public class SetGame extends JPanel {
             Tile[] array2 = mergeLineR(moveLineR(array1));// arrange then merge elems in that array
             //affter merged, add the line of array in array myTiles
             setLine(i, array2);
-
+            if(i==3){
+             un[c]= undo.push(array1);
+             c++;
+            }
+             
+             
+             
             if (!needAddTile && !compare2Array(array1, array2)) {
                 needAddTile = true;
             }
@@ -502,10 +514,10 @@ public class SetGame extends JPanel {
             g.setColor(new Color(0xffffff));
             g.setFont(new Font(font_name, Font.BOLD, 48));
             if (checkWin) {
-                  g.setFont(new Font(font_name, Font.PLAIN, 150));
+                g.setFont(new Font(font_name, Font.PLAIN, 150));
                 g.drawString("WON", 150, 270);
                 
-                g.setColor(new Color(0xff3b25));
+                g.setColor(new Color(0xff3b25));//get background for Tiles
                 g.fillRect(0, 430, 800, 70);
                 
                 g.setFont(new Font(font_name, Font.PLAIN, 20));
@@ -516,7 +528,7 @@ public class SetGame extends JPanel {
                 g.setFont(new Font(font_name, Font.PLAIN, 150));
                 g.drawString("LOSE", 150, 270);
                 
-                g.setColor(new Color(0x4d4d4d));
+                g.setColor(new Color(0xff3b25));//get background for Tiles
                 g.fillRect(0, 430, 800, 70);
                 
                 g.setFont(new Font(font_name, Font.PLAIN, 20));
