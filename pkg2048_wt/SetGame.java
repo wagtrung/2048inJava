@@ -37,23 +37,10 @@ public class SetGame extends JPanel {
     boolean checkWin = false;
     boolean checkLose = false;
     int Score = 0;
-//    Tile[] pre;
+    static int step = 0;
 
     Stack<Tile[]> undo = new Stack<Tile[]>();
     Stack<Tile[]> redo = new Stack<Tile[]>();
-
-//    public void display() {
-//        int k = -1;
-//        for (Tile i : pre) {
-//            k++;
-//            if (k == 4 || k == 8 || k == 12) {
-//                System.out.println("");
-//            }
-//            System.out.print(i.value + " ");
-//
-//        }
-//        System.out.println("\n \n");
-//    }
 
     public SetGame() { //contructor
 
@@ -72,20 +59,36 @@ public class SetGame extends JPanel {
                 if (!checkWin && !checkLose) {
                     switch (e.getKeyCode()) {
                         case KeyEvent.VK_LEFT:
+                            undoStep = 0;
+                            redoStep = 0;
+
                             moveLeft();
-                            
+                            System.out.println("Step " + step);
+
                             break;
                         case KeyEvent.VK_RIGHT:
+                            undoStep = 0;
+                            redoStep = 0;
+
                             moveRight();
-                            
+                            System.out.println("Step " + step);
+
                             break;
                         case KeyEvent.VK_DOWN:
+                            undoStep = 0;
+                            redoStep = 0;
+
                             moveDown();
-                            
+                            System.out.println("Step " + step);
+
                             break;
                         case KeyEvent.VK_UP:
+                            undoStep = 0;
+                            redoStep = 0;
+
                             moveUp();
-                            
+                            System.out.println("Step " + step);
+
                             break;
                         case KeyEvent.VK_W:
                             checkWin = true;
@@ -95,7 +98,7 @@ public class SetGame extends JPanel {
                             break;
                         case KeyEvent.VK_U:
                             moveUndo();
-                           
+
                             break;
                         case KeyEvent.VK_R:
                             moveRedo();
@@ -120,11 +123,6 @@ public class SetGame extends JPanel {
         checkWin = false;
         checkLose = false;
         myTiles = new Tile[16];//4*4 tiles
-       
-
-//        for (int i = 0; i < pre.length; i++) {// initial 16 tites with their value=0
-//            pre[i] = new Tile();
-//        }
 
         for (int i = 0; i < myTiles.length; i++) {// initial 16 tites with their value=0
             myTiles[i] = new Tile();
@@ -135,15 +133,54 @@ public class SetGame extends JPanel {
     }
 
     ////--Undo, Redo---////
+    static int undoStep = 0;
+
     public void moveUndo() {
-        redo.push(undo.peek());
+
+        undoStep++;
+        step--;
+
+        if (undoStep == 1) {// if 1st time store that myTiles in RedoStack
+            redo.push(myTiles);
+        }
+        redo.push(undo.peek()); // continute store the top of UndoStack
+
         myTiles = undo.pop();
+
+        if (undo.size() == 0) {
+
+            System.out.println("cannot Undo anymore !" + " Step " + step);
+            System.out.println("--------------------------------");
+            undoStep = 0;
+        } else {
+
+            System.out.println("Undo " + undoStep + "-- Backward to Step: " + step);
+        }
 
     }
 
+    static int redoStep = 0;
+
     public void moveRedo() {
-        undo.push(undo.peek());
+
+        redoStep++;
+        step++;
+
+        if (redoStep == 1) {
+            redo.pop();
+        }
+        undo.push(redo.peek());
         myTiles = redo.pop();
+
+        if (redo.size() == 0) {
+
+            System.out.println("cannot Redo anymore !" + " Step " + step);
+            System.out.println("--------------------------------");
+            redoStep = 0;
+        } else {
+
+            System.out.println("Redo " + redoStep + "-- Fordward to Step: " + step);
+        }
 
     }
 
@@ -276,9 +313,10 @@ public class SetGame extends JPanel {
 
     ////---LEFT----////
     public void moveLeft() {
+        step++;
         boolean checkToAdd = false;
-         Tile[] pre = new Tile[16];
-         for (int i = 0; i < pre.length; i++) {// initial 16 tites with their value=0
+        Tile[] pre = new Tile[16];
+        for (int i = 0; i < pre.length; i++) {// initial 16 tites with their value=0
             pre[i] = new Tile();
         }
 
@@ -297,7 +335,6 @@ public class SetGame extends JPanel {
         }
 
         undo.push(pre);
-        
 
         if (checkToAdd) {
             addTile();
@@ -348,8 +385,9 @@ public class SetGame extends JPanel {
 
 ////---RIGHT---/////
     public void moveRight() {
+        step++;
         Tile[] pre = new Tile[16];
-         for (int i = 0; i < pre.length; i++) {// initial 16 tites with their value=0
+        for (int i = 0; i < pre.length; i++) {// initial 16 tites with their value=0
             pre[i] = new Tile();
         }
         boolean checkToAdd = false;
@@ -422,8 +460,9 @@ public class SetGame extends JPanel {
 
     ////----UP----////
     public void moveUp() {
-Tile[] pre = new Tile[16];
-for (int i = 0; i < pre.length; i++) {// initial 16 tites with their value=0
+        step++;
+        Tile[] pre = new Tile[16];
+        for (int i = 0; i < pre.length; i++) {// initial 16 tites with their value=0
             pre[i] = new Tile();
         }
         boolean needAddTile = false;
@@ -489,8 +528,9 @@ for (int i = 0; i < pre.length; i++) {// initial 16 tites with their value=0
 
 ////----DOWN---////
     public void moveDown() {
-Tile[] pre = new Tile[16];
-for (int i = 0; i < pre.length; i++) {// initial 16 tites with their value=0
+        step++;
+        Tile[] pre = new Tile[16];
+        for (int i = 0; i < pre.length; i++) {// initial 16 tites with their value=0
             pre[i] = new Tile();
         }
         boolean needAddTile = false;
@@ -564,9 +604,11 @@ for (int i = 0; i < pre.length; i++) {// initial 16 tites with their value=0
     public void paint(Graphics g) {
         super.paint(g);
 
-        Toolkit t = Toolkit.getDefaultToolkit();
-        Image i = t.getImage("background.png");
-        g.drawImage(i, 300, 200, this);
+//        Toolkit t = Toolkit.getDefaultToolkit();
+//        Image i = t.getImage("background.png");
+//        g.drawImage(i, 300, 200, this);
+        g.setColor(new Color(0x666666));
+        g.fillRect(0, 0, this.getSize().width, this.getSize().height);
 
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
@@ -631,7 +673,12 @@ for (int i = 0; i < pre.length; i++) {// initial 16 tites with their value=0
 
         }
         g.setFont(new Font(font_name, Font.TYPE1_FONT, 30));
+        g.setColor(new Color(0xFF7C00));
         g.drawString("Score: " + Score, 520, 50);
+
+        g.setFont(new Font(font_name, Font.TYPE1_FONT, 20));
+        g.setColor(new Color(0xFF7C00));
+        g.drawString("U: undo | R:redo ", 520, 100);
 
     }
 

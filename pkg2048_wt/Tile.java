@@ -65,7 +65,7 @@ else{
         case 1024: return new Color(0xedc53f);
         case 2048: return new Color(0xedc22e);
       }
-      return new Color(0x3D85C6);// blue color for the background of the other tiles
+      return new Color(0x252525);// blue color for the background of the other tiles
     }
   }
     
