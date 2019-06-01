@@ -12,6 +12,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -36,11 +37,23 @@ public class SetGame extends JPanel {
     boolean checkWin = false;
     boolean checkLose = false;
     int Score = 0;
-    Tile[] un;
-    Tile[] re;
-    Stack undo = new Stack() ;
-    Stack redo =  new Stack();
-    int c=0;
+//    Tile[] pre;
+
+    Stack<Tile[]> undo = new Stack<Tile[]>();
+    Stack<Tile[]> redo = new Stack<Tile[]>();
+
+//    public void display() {
+//        int k = -1;
+//        for (Tile i : pre) {
+//            k++;
+//            if (k == 4 || k == 8 || k == 12) {
+//                System.out.println("");
+//            }
+//            System.out.print(i.value + " ");
+//
+//        }
+//        System.out.println("\n \n");
+//    }
 
     public SetGame() { //contructor
 
@@ -60,21 +73,33 @@ public class SetGame extends JPanel {
                     switch (e.getKeyCode()) {
                         case KeyEvent.VK_LEFT:
                             moveLeft();
+                            
                             break;
                         case KeyEvent.VK_RIGHT:
                             moveRight();
+                            
                             break;
                         case KeyEvent.VK_DOWN:
                             moveDown();
+                            
                             break;
                         case KeyEvent.VK_UP:
                             moveUp();
+                            
                             break;
                         case KeyEvent.VK_W:
-                             checkWin=true;
+                            checkWin = true;
                             break;
                         case KeyEvent.VK_L:
-                             checkLose=true;
+                            checkLose = true;
+                            break;
+                        case KeyEvent.VK_U:
+                            moveUndo();
+                           
+                            break;
+                        case KeyEvent.VK_R:
+                            moveRedo();
+
                             break;
                     }
                 }
@@ -95,12 +120,31 @@ public class SetGame extends JPanel {
         checkWin = false;
         checkLose = false;
         myTiles = new Tile[16];//4*4 tiles
+       
+
+//        for (int i = 0; i < pre.length; i++) {// initial 16 tites with their value=0
+//            pre[i] = new Tile();
+//        }
 
         for (int i = 0; i < myTiles.length; i++) {// initial 16 tites with their value=0
             myTiles[i] = new Tile();
         }
         addTile();// add 2 tiles at the begin in random position on board 
         addTile();
+
+    }
+
+    ////--Undo, Redo---////
+    public void moveUndo() {
+        redo.push(undo.peek());
+        myTiles = undo.pop();
+
+    }
+
+    public void moveRedo() {
+        undo.push(undo.peek());
+        myTiles = redo.pop();
+
     }
 
     ////----BORN TILE----////
@@ -109,18 +153,19 @@ public class SetGame extends JPanel {
 
         if (!checkSpace().isEmpty()) { // until all tiles on the board have value >0
             int pos = (int) (Math.random() * list.size()) + 0;
-            Tile newTile = list.get(pos);
+
             if (Math.random() < 1) {
-                newTile.value = 2;
+                list.get(pos).value = 2;
             } else {
-                newTile.value = 4;
+                list.get(pos).value = 4;
             }
+
         }
     }
 
     private List<Tile> checkSpace() {
 
-        final List<Tile> list = new ArrayList<Tile>(16);// add in list if value=0
+        final List<Tile> list = new ArrayList<Tile>(16);// add obj Tile in list if its value=0
 
         for (int k = 0; k < myTiles.length; k++) {
             if (myTiles[k].isEmpty()) {
@@ -171,16 +216,44 @@ public class SetGame extends JPanel {
         return line;
     }
 
-    private void setLine(int index, Tile[] fromArray) {//start coppy from 0 in fromArray
-        System.arraycopy(fromArray, 0, myTiles, index * 4, 4);// take 4 elems add at head of each line
+    private void setLine(int index, Tile[] fromArray, Tile[] toArray) {//start coppy from 0 in fromArray
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 4; x++) {
+                if (y == index) {
+                    toArray[x + y * 4] = fromArray[x];
+                }
+            }
+        }
+    }
+
+    private void setLine1(int index, Tile[] fromArray, Tile[] toArray) {//start coppy from 0 in fromArray
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 4; x++) {
+                if (y == index) {
+                    toArray[x + y * 4].value = fromArray[x].value;
+                }
+            }
+        }
+
     }
 /// Column in vertical
 
-    private void setCol(int index, Tile[] a) {//start coppy merged Col array to array myTiles
+    private void setCol(int index, Tile[] a, Tile[] toArray) {//start coppy merged Col array to array myTiles
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 if (i == index) {
-                    myTiles[i + j * 4] = a[j];
+                    toArray[i + j * 4] = a[j];
+                }
+            }
+        }
+
+    }
+
+    private void setCol1(int index, Tile[] a, Tile[] toArray) {//start coppy merged Col array to array myTiles
+        for (int x = 0; x < 4; x++) {
+            for (int y = 0; y < 4; y++) {
+                if (x == index) {
+                    toArray[x + y * 4].value = a[y].value;
                 }
             }
         }
@@ -204,18 +277,27 @@ public class SetGame extends JPanel {
     ////---LEFT----////
     public void moveLeft() {
         boolean checkToAdd = false;
+         Tile[] pre = new Tile[16];
+         for (int i = 0; i < pre.length; i++) {// initial 16 tites with their value=0
+            pre[i] = new Tile();
+        }
+
         for (int i = 0; i < 4; i++) {
 
-            Tile[] array1 = getLine(i);//get a line in horizontal incluing 4 elems
-            Tile[] array2 = mergeLineL(arrangeLineL(array1));// arrange then merge elems in that array
-            //after merged, add the line of array in array myTiles
-            setLine(i, array2);
-            //after stored 4 lines incluing 16 elems in each arrays
+            Tile[] array1 = getLine(i);//get a line in horizontal including 4 elems
+            setLine1(i, array1, pre);// call by value
+
+            Tile[] array2 = mergeLineL(arrangeLineL(array1));// arange then merge elems in that array
+            setLine(i, array2, myTiles);// call by reference
+
             if (!checkToAdd && !compare2Array(array1, array2)) {// only born a new tile when 2 arrays not same
                 checkToAdd = true;
             }
 
         }
+
+        undo.push(pre);
+        
 
         if (checkToAdd) {
             addTile();
@@ -266,27 +348,29 @@ public class SetGame extends JPanel {
 
 ////---RIGHT---/////
     public void moveRight() {
-        boolean needAddTile = false;
+        Tile[] pre = new Tile[16];
+         for (int i = 0; i < pre.length; i++) {// initial 16 tites with their value=0
+            pre[i] = new Tile();
+        }
+        boolean checkToAdd = false;
         for (int i = 0; i < 4; i++) {
 
             Tile[] array1 = getLine(i);//get a line in horizontal incluing 4 elems
             Tile[] array2 = mergeLineR(moveLineR(array1));// arrange then merge elems in that array
             //affter merged, add the line of array in array myTiles
-            setLine(i, array2);
-            if(i==3){
-             un[c]= undo.push(array1);
-             c++;
-            }
-             
-             
-             
-            if (!needAddTile && !compare2Array(array1, array2)) {
-                needAddTile = true;
+            setLine(i, array2, myTiles);
+            setLine1(i, array1, pre);
+
+            //after stored 4 lines incluing 16 elems in each arrays
+            if (!checkToAdd && !compare2Array(array1, array2)) {// only born a new tile when 2 arrays not same
+                checkToAdd = true;
             }
 
         }
 
-        if (needAddTile) {
+        undo.push(pre);
+
+        if (checkToAdd) {
             addTile();
         }
 
@@ -338,20 +422,25 @@ public class SetGame extends JPanel {
 
     ////----UP----////
     public void moveUp() {
-
+Tile[] pre = new Tile[16];
+for (int i = 0; i < pre.length; i++) {// initial 16 tites with their value=0
+            pre[i] = new Tile();
+        }
         boolean needAddTile = false;
         for (int i = 0; i < 4; i++) {
 
             Tile[] array1 = getCol(i);//get a line in horizontal incluing 4 elems
             Tile[] array2 = mergeColU(arrangeColU(array1));// arrange then merge elems in that array
             //affter merged, add the line of array in array myTiles
-            setCol(i, array2);
+            setCol(i, array2, myTiles);
+            setCol1(i, array1, pre);
 
             if (!needAddTile && !compare2Array(array1, array2)) {
                 needAddTile = true;
             }
 
         }
+        undo.push(pre);
 
         if (needAddTile) {
             addTile();
@@ -400,20 +489,25 @@ public class SetGame extends JPanel {
 
 ////----DOWN---////
     public void moveDown() {
-
+Tile[] pre = new Tile[16];
+for (int i = 0; i < pre.length; i++) {// initial 16 tites with their value=0
+            pre[i] = new Tile();
+        }
         boolean needAddTile = false;
         for (int i = 0; i < 4; i++) {
 
             Tile[] array1 = getCol(i);//get a line in horizontal incluing 4 elems
             Tile[] array2 = mergeColD(arrangeColD(array1));// arrange then merge elems in that array
             //affter merged, add the line of array in array myTiles
-            setCol(i, array2);
+            setCol(i, array2, myTiles);
+            setCol1(i, array1, pre);
 
             if (!needAddTile && !compare2Array(array1, array2)) {
                 needAddTile = true;
             }
 
         }
+        undo.push(pre);
 
         if (needAddTile) {
             addTile();
@@ -470,11 +564,10 @@ public class SetGame extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
 
-        ImageIcon bg = new ImageIcon("background.png");
-        Image bag = bg.getImage();
-        g.drawImage(bag, 0, 0, null);
+        Toolkit t = Toolkit.getDefaultToolkit();
+        Image i = t.getImage("background.png");
+        g.drawImage(i, 300, 200, this);
 
-        g.fillRect(0, 0, this.getSize().width, this.getSize().height);
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
                 drawTile(g, myTiles[x + y * 4], x, y);
@@ -516,10 +609,10 @@ public class SetGame extends JPanel {
             if (checkWin) {
                 g.setFont(new Font(font_name, Font.PLAIN, 150));
                 g.drawString("WON", 150, 270);
-                
+
                 g.setColor(new Color(0xff3b25));//get background for Tiles
                 g.fillRect(0, 430, 800, 70);
-                
+
                 g.setFont(new Font(font_name, Font.PLAIN, 20));
                 g.setColor(new Color(0xfff0ef));
                 g.drawString("Press ESC to play again", 250, getHeight() - 20);
@@ -527,10 +620,10 @@ public class SetGame extends JPanel {
             if (checkLose) {
                 g.setFont(new Font(font_name, Font.PLAIN, 150));
                 g.drawString("LOSE", 150, 270);
-                
+
                 g.setColor(new Color(0xff3b25));//get background for Tiles
                 g.fillRect(0, 430, 800, 70);
-                
+
                 g.setFont(new Font(font_name, Font.PLAIN, 20));
                 g.setColor(new Color(0xfff0ef));
                 g.drawString("Press ESC to play again", 250, getHeight() - 20);
