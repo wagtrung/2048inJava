@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pkg2048_wt;
+package aaaa;
 
 /**
  *
@@ -23,8 +23,8 @@ public class main extends JFrame {
 
         game.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);// add close on top right
 
-        game.setSize(720, 535); //w|h
-        game.setResizable(true);// can be zoom out
+        game.setSize(855, 600); //w|h
+        game.setResizable(false);// can be zoom out
 
         game.add(new SetGame());
 
