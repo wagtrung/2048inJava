@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aaaa;
+package pkg2048_wt;
 
 /**
  *
@@ -24,6 +24,7 @@ import java.awt.Color;
  * @author WagTrung
  */
 public class Tile { 
+    
       
     int value;
 
@@ -41,21 +42,15 @@ public class Tile {
     }
 
     public Color getForeground() { // color for a number of tile
-
-if(value<16){
-    return new Color(0xffffff); // dark gray on light background if 2,4,8
-}
-else{
-    return  new Color(0xf9f6f2);//light gray
-}
+    return new Color(0xffffff); // white
     }
 
     public Color getBackground() { //color for background of title  
       switch (value) {
           
-        case 2:    return new Color(255,255,0,100);// yellow
-        case 4:    return new Color(255,153,0,100);
-        case 8:    return new Color(255,153,0,200);
+        case 2:    return new Color(255,153,0,50);// yellow
+        case 4:    return new Color(255,255,0,100);
+        case 8:    return new Color(255,100,0,150);
         case 16:   return new Color(255,0,0,100);
         case 32:   return new Color(255,0,255,100);
         case 64:   return new Color(153,0,255,100);

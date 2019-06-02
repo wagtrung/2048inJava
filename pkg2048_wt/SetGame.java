@@ -3,28 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package aaaa;
+package pkg2048_wt;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
@@ -36,25 +30,23 @@ public class SetGame extends JPanel {
     Tile[] myTiles;
 
     String font_name = "Arial";
-    int tile_font_size = 99;
+    int tile_font_size = 100;
     int TILES_MARGIN = 20;
     boolean checkWin = false;
     boolean checkLose = false;
     int Score = 0;
     static int step = 0;
+    BufferedImage stboard;
     BufferedImage normalboard;
     BufferedImage boardhard;
-    BufferedImage stboard;
     BufferedImage winboard;
     BufferedImage loseboard;
-   
-    Boolean hard=false;
-    Boolean normal=false;
+
+    Boolean hard = false;
+    Boolean normal = false;
 
     Stack<Tile[]> undo = new Stack<Tile[]>();
     Stack<Tile[]> redo = new Stack<Tile[]>();
-    
-    
 
     public SetGame() { //contructor
 
@@ -64,8 +56,11 @@ public class SetGame extends JPanel {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                	hard=false;
-                	normal=false;
+                    step = 0;
+                    undoStep = 0;
+                    redoStep = 0;
+                    hard = false;
+                    normal = false;
                     startGame();
                 }
                 if (!checkMove()) {// cannot move --> stop game
@@ -106,7 +101,7 @@ public class SetGame extends JPanel {
                             System.out.println("Step " + step);
 
                             break;
-                       
+
                         case KeyEvent.VK_U:
                             moveUndo();
 
@@ -115,7 +110,7 @@ public class SetGame extends JPanel {
                             moveRedo();
 
                             break;
-                        
+
                         case KeyEvent.VK_W:
                             checkWin = true;
                             break;
@@ -144,12 +139,12 @@ public class SetGame extends JPanel {
     }
 
     public void startGame() {
-    	boardhard=ImageLoader.loadImage("boardhard.png");
-    	normalboard=ImageLoader.loadImage("normalboard.png");
-    	stboard=ImageLoader.loadImage("stboard.png");
-    	winboard=ImageLoader.loadImage("winboard.png");
-    	loseboard=ImageLoader.loadImage("loseboard.png");
-    	
+        boardhard = ImageLoader.loadImage("boardhard.png");
+        normalboard = ImageLoader.loadImage("normalboard.png");
+        stboard = ImageLoader.loadImage("stboard.png");
+        winboard = ImageLoader.loadImage("winboard.png");
+        loseboard = ImageLoader.loadImage("loseboard.png");
+
         Score = 0;
         checkWin = false;
         checkLose = false;
@@ -158,22 +153,18 @@ public class SetGame extends JPanel {
         for (int i = 0; i < myTiles.length; i++) {// initial 16 tites with their value=0
             myTiles[i] = new Tile();
         }
-        if(normal) {
-        addTile();// add 2 tiles at the begin in random position on board 
-        addTile();}
-        if(hard) {
-        	for(int i=0; i<=8;i++) {
-        		addTile();
-        	}
+        if (normal) {
+            addTile();// add 2 tiles at the begin in random position on board 
+            addTile();
+        }
+        if (hard) {
+            for (int i = 1; i <= 4; i++) {
+                addTile();
+            }
         }
 
     }
 
-    
-    
-    
-    
-    
     ////--Undo, Redo---////
     static int undoStep = 0;
 
@@ -204,7 +195,6 @@ public class SetGame extends JPanel {
     static int redoStep = 0;
 
     public void moveRedo() {
-    
 
         redoStep++;
         step++;
@@ -233,27 +223,26 @@ public class SetGame extends JPanel {
 
         if (!checkSpace().isEmpty()) { // until all tiles on the board have value >0
             int pos = (int) (Math.random() * list.size()) + 0;
-            if(normal) {
-            if (Math.random() < 1) {
-                list.get(pos).value = 2;
-            } else {
-                list.get(pos).value = 4;
-            }
-            }
-            if(hard) {
-            	
-            	double randomDouble = Math.random();
-        		randomDouble = randomDouble *2 ;
-        		int randomInt = (int) randomDouble;
-            	
-                if (randomInt == 0) {
+            if (normal) {
+                if (Math.random() < 1) {
                     list.get(pos).value = 2;
-                } else if (randomInt == 1 ){
+                } else {
                     list.get(pos).value = 4;
                 }
-           
-            
+            }
+            if (hard) {
+
+                double randomDouble = Math.random();
+                randomDouble = randomDouble * 2;
+                int randomInt = (int) randomDouble;
+
+                if (randomInt == 0) {
+                    list.get(pos).value = 2;
+                } else if (randomInt == 1) {
+                    list.get(pos).value = 4;
                 }
+
+            }
 
         }
     }
@@ -395,12 +384,13 @@ public class SetGame extends JPanel {
         undo.push(pre);
 
         if (checkToAdd) {
-        	if(normal) {
-            addTile();}
-        	if(hard) {
+            if (normal) {
+                addTile();
+            }
+            if (hard) {
                 addTile();
                 addTile();
-                }
+            }
         }
     }
 
@@ -472,12 +462,13 @@ public class SetGame extends JPanel {
         undo.push(pre);
 
         if (checkToAdd) {
-        	if(normal) {
-            addTile();}
-        	if(hard) {
+            if (normal) {
+                addTile();
+            }
+            if (hard) {
                 addTile();
                 addTile();
-                }
+            }
         }
 
     }
@@ -543,19 +534,20 @@ public class SetGame extends JPanel {
             setCol1(i, array1, pre);
 
             if (!checkToAdd && !compare2Array(array1, array2)) {
-            	checkToAdd = true;
+                checkToAdd = true;
             }
 
         }
         undo.push(pre);
 
         if (checkToAdd) {
-        	if(normal) {
-            addTile();}
-        	if(hard) {
+            if (normal) {
+                addTile();
+            }
+            if (hard) {
                 addTile();
                 addTile();
-                }
+            }
         }
     }
 
@@ -615,19 +607,20 @@ public class SetGame extends JPanel {
             setCol1(i, array1, pre);
 
             if (!checkToAdd && !compare2Array(array1, array2)) {
-            	checkToAdd = true;
+                checkToAdd = true;
             }
 
         }
         undo.push(pre);
 
         if (checkToAdd) {
-        	if(normal) {
-            addTile();}
-        	if(hard) {
+            if (normal) {
+                addTile();
+            }
+            if (hard) {
                 addTile();
                 addTile();
-                }
+            }
         }
 
     }
@@ -681,31 +674,29 @@ public class SetGame extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
 
+        g.drawImage(stboard, 0, 0, null);
 
-        
-        g.drawImage(stboard,0,0,null);
-        
-        if(hard) {
-        g.clearRect(0, 0, getWidth(), getHeight());
-        g.drawImage(boardhard,0,0,null);
-        
-        for (int y = 0; y < 4; y++) {
-            for (int x = 0; x < 4; x++) {
-                drawTile(g, myTiles[x + y * 4], x, y);
-            }
-        }
-        }
-        
-        if(normal) {
+        if (hard) {
             g.clearRect(0, 0, getWidth(), getHeight());
-            g.drawImage(normalboard,0,0,null);
-            
+            g.drawImage(boardhard, 0, 0, null);
+
             for (int y = 0; y < 4; y++) {
                 for (int x = 0; x < 4; x++) {
                     drawTile(g, myTiles[x + y * 4], x, y);
                 }
             }
+        }
+
+        if (normal) {
+            g.clearRect(0, 0, getWidth(), getHeight());
+            g.drawImage(normalboard, 0, 0, null);
+
+            for (int y = 0; y < 4; y++) {
+                for (int x = 0; x < 4; x++) {
+                    drawTile(g, myTiles[x + y * 4], x, y);
+                }
             }
+        }
     }
 
     private void drawTile(Graphics g2, Tile tile, int x, int y) {
@@ -716,7 +707,7 @@ public class SetGame extends JPanel {
         int value = tile.value;
         int xOffset = offsetCoors(x);
         int yOffset = offsetCoors(y);
-    
+
 ///BOX
         g.setColor(tile.getBackground());//get background for Tiles
         g.fillRoundRect(xOffset, yOffset, tile_font_size, tile_font_size, 200, 200); //Box Tile
@@ -741,25 +732,18 @@ public class SetGame extends JPanel {
 
         g.setFont(new Font(font_name, Font.TYPE1_FONT, 30));
         g.setColor(new Color(0xaf5b1a));
-        g.drawString(""+step, 700, 165);
-          
-            if (checkWin) {
-               
-            	 
-                g.drawImage(winboard,0,0,null);
-            
-            }
-            if (checkLose) {
-            	 g.drawImage(loseboard,0,0,null);
-            }
+        g.drawString("" + step, 700, 165);
 
-        
-    
-
+        if (checkWin) {
+            g.drawImage(winboard, -10, 0, null);
+        }
+        if (checkLose) {
+            g.drawImage(loseboard, -10, 0, null);
+        }
     }
 
     private int offsetCoors(int index) {
-        return index * (TILES_MARGIN + tile_font_size) + TILES_MARGIN + 37;
+        return index * (TILES_MARGIN + 100) + TILES_MARGIN + 34;
     }
 
 }

@@ -1,4 +1,4 @@
-package aaaa;
+package pkg2048_wt;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
