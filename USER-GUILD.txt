@@ -1,1 +1,7 @@
-CLICK IN foLder SOURCE--> Set up
+CLICK IN foLder SOURCE
+-->DOWNLOAD-WagTrungSetUp.exe
+-->Right click--> run as administrator --> next until finish.
+-->THE GAME has a green logo at your destop folder.
+-----------------------------------------------------------------------
+Developer|Designer: WagTrung
+PayPal: nqt99design@gmail.com
