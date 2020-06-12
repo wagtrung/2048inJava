@@ -1,4 +1,4 @@
-# Game 2048 - Java <br> Course: algorithm and data structures
+# <h1>Game 2048 - Java</h1> <br> Course: algorithm and data structures
 
 Trung has made this game through the time of learning "algorithm and data structures" in Java Language.
 <br>
