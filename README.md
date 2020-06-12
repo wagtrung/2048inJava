@@ -14,11 +14,11 @@ Click <b>H</b> to play in the Hard level)
 <img src="https://www.upsieutoc.com/images/2020/06/12/Screenshot-855.png"  style="max-width:100%;">
 
 <br> 
-### Normal Level GamePlay Feature
+## Normal Level GamePlay Feature
 <br>
 <img src="https://www.upsieutoc.com/images/2020/06/12/Screenshot-856.png"  style="max-width:100%;">
 <br> 
-### Hard Level GamePlay Feature
+## Hard Level GamePlay Feature
 <br>
 <img src="https://www.upsieutoc.com/images/2020/06/12/Screenshot-857.png"  style="max-width:100%;">
 
