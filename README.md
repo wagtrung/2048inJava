@@ -15,11 +15,11 @@ Click <b>H</b> to play in the Hard level)
 <img src="https://www.upsieutoc.com/images/2020/06/12/Screenshot-855.png"  style="max-width:100%;">
 
 
-## Normal Level GamePlay
+## Type N --> Normal Level GamePlay
 
 <img src="https://www.upsieutoc.com/images/2020/06/12/Screenshot-856.png"  style="max-width:100%;">
 
-## Hard Level GamePlay
+## Type H --> Hard Level GamePlay
 
 <img src="https://www.upsieutoc.com/images/2020/06/12/Screenshot-857.png"  style="max-width:100%;">
 
