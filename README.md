@@ -1,37 +1,21 @@
-# <h1>Game 2048 - Java</h1> 
+# wagtrung personal Site (Midterm Exam) - HTML, CSS</h1> 
 
-<br> Course: algorithm and data structures
-This game 2048 has been redesigned, developed by WagTrung through the time of learning "algorithm and data structures" Subject in Java Language.
-<br> There are some basic infor about the game-play & the structures are describled bellow.
-<br> functions: Undo - Redo feature
-<br> Funtion to Display-Count the Score
-<br> There are 2 Level: Normal level and Hard level ( From the keyboard, Click <b>N</b> to play in the normal level. 
-Click <b>H</b> to play in the Hard level)
-<br> Click <b>Esc</b>- to Escape and Get back to the the previous Screen.
-<br>
-<br>
+<br> Course: Web Application
+This Static Site is the demand of question 2 in the Midterm Examination at IU-VNU-HCMC 2020
+<br> Build 7 Pages HTML, and using external Style Sheet Cascading to style your page base on your creative mind...
+<br> The Site including:
+<br> 0/Welcome (index.html)
+<br> 1/About me
+<br> 2/Hobbies
+<br> 3/Major
+<br> 4/Portfolio
+<br> 5/Awards
+<br> 6/Services
+<br> 7/Experiences
 
-## Welcome GamePlay Screen
-<img src="https://www.upsieutoc.com/images/2020/06/12/Screenshot-855.png"  style="max-width:100%;">
+## Welcome Page
+<img src="https://www.upsieutoc.com/images/2020/06/13/screencapture-wtcv-netlify-app-2020-06-13-02_07_16.png">
 
+## About Page
+<img src="https://www.upsieutoc.com/images/2020/06/13/screencapture-wtcv-netlify-app-about-html-2020-06-13-02_14_11.png">
 
-## Type N --> Normal Level GamePlay
-
-<img src="https://www.upsieutoc.com/images/2020/06/12/Screenshot-856.png"  style="max-width:100%;">
-
-## Type H --> Hard Level GamePlay
-
-<img src="https://www.upsieutoc.com/images/2020/06/12/Screenshot-857.png"  style="max-width:100%;">
-
-## Installation
-
- [Click here to download EXE file](https://github.com/wagtrung/2048inJava/blob/master/SET%20UP-%20INFOR/WagTrung%20setup.exe) to download the file WagTrungSetUp.exe in folder "Set Up - Infor"
-<br>
-or click in the folder <b> SET UP- INFOR </b><br> <br>
-Step 2: Download WagTrungSetUp.exe<br>
-Step 3: Right click--> run as administrator --> next until finish. <br>
-Step 4: THE GAME has a green logo at your destop folder.<br>
-
-## Structure
-
- [Click here to View the pdf file](https://github.com/wagtrung/2048inJava/tree/master/SET%20UP-%20INFOR/slide-doucument-guild)
