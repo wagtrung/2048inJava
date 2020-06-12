@@ -1,6 +1,12 @@
-# <h1>Game 2048 - Java</h1> <br> Course: algorithm and data structures
+# <h1>Game 2048 - Java</h1> 
 
-Trung has made this game through the time of learning "algorithm and data structures" in Java Language.
+<br> Course: algorithm and data structures
+This game 2048 has been redesigned, developed by WagTrung through the time of learning "algorithm and data structures" Subject in Java Language.
+<br> There are some basic infor about the game-play & the structures are describled bellow.
+<br> functions: Undo - Redo :Using Stack, Queue
+<br> Display-Count the Score
+<br> 2 Level: Normal level and Hard level ( From the keyboard, Click <b>N</b> to play in the normal level. 
+Click <b>H</b> to play in the Hard level.
 <br>
 <br>
 
@@ -8,10 +14,13 @@ Trung has made this game through the time of learning "algorithm and data struct
 
 ## Installation
 
- [Click here to download the file WagTrungSetUp.exe in folder "Set Up - Infor"](https://github.com/wagtrung/2048inJava/blob/master/SET%20UP-%20INFOR/WagTrung%20setup.exe) to install.
+ [Click here](https://github.com/wagtrung/2048inJava/blob/master/SET%20UP-%20INFOR/WagTrung%20setup.exe) to download the file WagTrungSetUp.exe in folder "Set Up - Infor"
 <br>
 or click in the folder <b> SET UP- INFOR </b><br> <br>
 Step 2: Download WagTrungSetUp.exe<br>
 Step 3: Right click--> run as administrator --> next until finish. <br>
 Step 4: THE GAME has a green logo at your destop folder.<br>
 
+## Structure
+
+ [Click here to View the pdf file] https://github.com/wagtrung/2048inJava/tree/master/SET%20UP-%20INFOR/slide-doucument-guild
