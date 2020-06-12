@@ -1,5 +1,7 @@
+#2048 Game (wagtrung version) -Java 
+
 <br> Course: algorithm and data structures
-This game 2048 has been redesigned, developed by WagTrung through the time of learning "algorithm and data structures" Subject in Java Language.
+This game 2048 has been redesigned, developed by WagTrung through the time of learning "algorithm and data structures" Subject in Java Language.<br>
 <br> There are some basic infor about the game-play & the structures are describled bellow.
 <br> functions: Undo - Redo feature
 <br> Funtion to Display-Count the Score
