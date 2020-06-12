@@ -1,8 +1,8 @@
 # wagtrung personal Site (Midterm Exam) - HTML, CSS
 
-##Course: Web Application
+<b>Course: Web Application>/b>
 <br>
-This Static Site is the demand of question 2 in the Midterm Examination at IU-VNU-HCMC 2020
+This Static Site is the demand of question 2 in the Midterm Examination at IU-VNU-HCMC, 2020
 <br> Build 7 Pages HTML, and using external Style Sheet Cascading to style your page base on your creative mind...
 <br> The Site including:
 <br> 0/Welcome (index.html)
@@ -25,3 +25,9 @@ This Static Site is the demand of question 2 in the Midterm Examination at IU-VN
 
 ## Awards Page
 <img src="https://www.upsieutoc.com/images/2020/06/13/screencapture-wtcv-netlify-app-award-html-2020-06-13-02_16_59.png">
+
+## Service Page
+<img src="https://www.upsieutoc.com/images/2020/06/13/screencapture-wtcv-netlify-app-service-html-2020-06-13-02_19_21.png">
+
+## Experiences Page
+<img src="https://www.upsieutoc.com/images/2020/06/13/screencapture-wtcv-netlify-app-experience-html-2020-06-13-02_20_02.png">
