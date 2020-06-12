@@ -13,9 +13,9 @@ Click <b>H</b> to play in the Hard level)
 
 <img src="https://www.upsieutoc.com/images/2020/06/12/Screenshot-855.png"  style="max-width:100%;">
 
-<br> <span style="color: blue" > Normal Level GamePlay Feature <span>
+<br> <b style="color: blue" > Normal Level GamePlay Feature </b><br>
 <img src="https://www.upsieutoc.com/images/2020/06/12/Screenshot-856.png"  style="max-width:100%;">
-<br> <b style="color: Orange"> Hard Level GamePlay Feature <b>
+<br> <b style="color: Orange"> Hard Level GamePlay Feature </b><br>
 <img src="https://www.upsieutoc.com/images/2020/06/12/Screenshot-857.png"  style="max-width:100%;">
 
 ## Installation
