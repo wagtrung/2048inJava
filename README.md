@@ -1,29 +1,14 @@
-# Foobar
+# Game 2048 - Java - Course: algorithm and data structures
 
-Foobar is a Python library for dealing with word pluralization.
+Trung has made this game through the time of learning "algorithm and data structures" in Java Language.
+<img src="https://www.upsieutoc.com/images/2020/06/12/Screenshot-855.png"  style="max-width:100%;">
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+ [pip](https://github.com/wagtrung/2048inJava/blob/master/SET%20UP-%20INFOR/WagTrung%20setup.exe) to install.
 
-```bash
-pip install foobar
-```
+CLICK IN folder <b> SET UP- INFOR </b>
+--> DOWNLOAD-WagTrungSetUp.exe
+--> Right click--> run as administrator --> next until finish.
+--> THE GAME has a green logo at your destop folder.
 
-## Usage
-
-```python
-import foobar
-
-foobar.pluralize('word') # returns 'words'
-foobar.pluralize('goose') # returns 'geese'
-foobar.singularize('phenomena') # returns 'phenomenon'
-```
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
-
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
