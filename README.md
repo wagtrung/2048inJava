@@ -14,7 +14,7 @@ Click <b>H</b> to play in the Hard level.
 
 ## Installation
 
- [Click here](https://github.com/wagtrung/2048inJava/blob/master/SET%20UP-%20INFOR/WagTrung%20setup.exe) to download the file WagTrungSetUp.exe in folder "Set Up - Infor"
+ [Click here to download EXE file](https://github.com/wagtrung/2048inJava/blob/master/SET%20UP-%20INFOR/WagTrung%20setup.exe) to download the file WagTrungSetUp.exe in folder "Set Up - Infor"
 <br>
 or click in the folder <b> SET UP- INFOR </b><br> <br>
 Step 2: Download WagTrungSetUp.exe<br>
@@ -23,4 +23,4 @@ Step 4: THE GAME has a green logo at your destop folder.<br>
 
 ## Structure
 
- [Click here to View the pdf file] https://github.com/wagtrung/2048inJava/tree/master/SET%20UP-%20INFOR/slide-doucument-guild
+ [Click here to View the pdf file](https://github.com/wagtrung/2048inJava/tree/master/SET%20UP-%20INFOR/slide-doucument-guild)
