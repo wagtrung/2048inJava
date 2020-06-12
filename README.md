@@ -3,14 +3,20 @@
 <br> Course: algorithm and data structures
 This game 2048 has been redesigned, developed by WagTrung through the time of learning "algorithm and data structures" Subject in Java Language.
 <br> There are some basic infor about the game-play & the structures are describled bellow.
-<br> functions: Undo - Redo :Using Stack, Queue
-<br> Display-Count the Score
-<br> 2 Level: Normal level and Hard level ( From the keyboard, Click <b>N</b> to play in the normal level. 
-Click <b>H</b> to play in the Hard level.
+<br> functions: Undo - Redo feature
+<br> Funtion to Display-Count the Score
+<br> There are 2 Level: Normal level and Hard level ( From the keyboard, Click <b>N</b> to play in the normal level. 
+Click <b>H</b> to play in the Hard level)
+<br> Click <b>Esc</b>- to Escape and Get back to the the previous Screen.
 <br>
 <br>
 
 <img src="https://www.upsieutoc.com/images/2020/06/12/Screenshot-855.png"  style="max-width:100%;">
+
+<br> <b style="color: blue"> Normal Level GamePlay Feature <b>
+<img src="https://www.upsieutoc.com/images/2020/06/12/Screenshot-856.png"  style="max-width:100%;">
+<br> <b style="color: Orange"> Hard Level GamePlay Feature <b>
+<img src="https://www.upsieutoc.com/images/2020/06/12/Screenshot-857.png"  style="max-width:100%;">
 
 ## Installation
 
